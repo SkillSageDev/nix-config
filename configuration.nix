@@ -4,7 +4,9 @@
 
 { config, pkgs, ... }:
 
-{
+let 
+  locale = "en_US.UTF-8"; 
+in {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -31,7 +33,7 @@
   time.timeZone = "Africa/Cairo";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = locale;
   
   i18n.extraLocales = [
     "en_US.UTF-8/UTF-8"
@@ -39,15 +41,15 @@
   ];
 
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = "ar_EG.UTF-8";
-    LC_IDENTIFICATION = "ar_EG.UTF-8";
-    LC_MEASUREMENT = "ar_EG.UTF-8";
-    LC_MONETARY = "ar_EG.UTF-8";
-    LC_NAME = "ar_EG.UTF-8";
-    LC_NUMERIC = "ar_EG.UTF-8";
-    LC_PAPER = "ar_EG.UTF-8";
-    LC_TELEPHONE = "ar_EG.UTF-8";
-    LC_TIME = "ar_EG.UTF-8";
+    LC_ADDRESS = locale;
+    LC_IDENTIFICATION = locale;
+    LC_MEASUREMENT = locale;
+    LC_MONETARY = locale;
+    LC_NAME = locale;
+    LC_NUMERIC = locale;
+    LC_PAPER = locale;
+    LC_TELEPHONE = locale;
+    LC_TIME = locale;
   };
 
   # Enable the X11 windowing system.
