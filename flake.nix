@@ -7,9 +7,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    agenix.url = "github:ryantm/agenix";
+
   };
 
-  outputs = { nixpkgs, home-manager, ... }: 
+  outputs = { nixpkgs, home-manager, agenix, ... }: 
     let
       lib = nixpkgs.lib;
       system = "x86_64-linux";
@@ -19,7 +21,10 @@
     nixosConfigurations = {
       nixos = lib.nixosSystem {
 	inherit system;
-	modules = [ ./configuration.nix ];
+	modules = [ 
+	./configuration.nix 
+	agenix.nixosModules.default
+	];
       };
     };
 
