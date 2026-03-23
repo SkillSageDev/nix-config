@@ -122,7 +122,8 @@ in {
     xremap
     timeshift
     git
-    agenix-cli
+    sops
+    age
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
