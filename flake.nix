@@ -7,12 +7,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    agenix.url = "github:ryantm/agenix";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     xremap-flake.url = "github:xremap/nix-flake";
   };
 
-  outputs = { nixpkgs, home-manager, agenix, xremap-flake, ... }: 
+  outputs = { nixpkgs, home-manager, sops-nix, xremap-flake, ... }: 
     let
       lib = nixpkgs.lib;
       system = "x86_64-linux";
@@ -25,7 +28,7 @@
 	inherit system;
 	modules = [ 
 	  ./configuration.nix 
-	  agenix.nixosModules.default
+	  sops-nix.nixosModules.default
 	  ./modules/xremap.nix
 	];
       };
