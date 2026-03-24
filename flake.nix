@@ -30,15 +30,16 @@
 	  ./configuration.nix 
 	  sops-nix.nixosModules.default
 	  ./modules/xremap.nix
-	];
-      };
-    };
 
-    homeConfigurations =  {
-      skill_sage = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [
-	  ./home.nix
+          home-manager.nixosModules.home-manager {
+	    home-manager = {
+              useUserPackages = true;
+              useGlobalPkgs = true;
+              backupFileExtension = "backup";
+	      users.skill_sage = import ./home.nix;
+	    };
+	  }
+
 	];
       };
     };
