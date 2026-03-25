@@ -1,7 +1,11 @@
 keys:
-  - &primary age19c6vkytd054qy50pw8x3we3fw4n33t5xp84wvqltecx6vktlz43q5jpzjs
+  - &users
+    - &skill_sage age19c6vkytd054qy50pw8x3we3fw4n33t5xp84wvqltecx6vktlz43q5jpzjs
+  - &hosts
+    - &nixos age1ltl0jmqaq2wt35k4c9xywayxx5mcdrpp9n6xe8kmrdjel5j6u33sw7tw6x
 creation_rules:
   - path_regex: secrets/.*\.yaml$
     key_groups:
     - age:
-      - *primary
+      - *skill_sage
+      - *nixos
