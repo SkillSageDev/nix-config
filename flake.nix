@@ -24,13 +24,14 @@
     
     nixosConfigurations = {
       nixos = lib.nixosSystem {
-        specialArgs = { inherit xremap-flake; };
+        specialArgs = { inherit xremap-flake; inherit sops-nix; };
 	inherit system;
 	modules = [ 
 	  ./configuration.nix 
-	  sops-nix.nixosModules.default
 	  ./modules/xremap.nix
+	  ./modules/sops.nix 
 
+          # FIXME: something broke "programs.neovim.defaultEditor = true;" after I added sops.nix for git
           home-manager.nixosModules.home-manager {
 	    home-manager = {
               useUserPackages = true;
