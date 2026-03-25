@@ -8,7 +8,8 @@
     validateSopsFiles = false;
 
     age = {
-      keyFile = "/home/skill_sage/.config/sops/age/key.txt";
+      sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+      keyFile = "/var/lib/sops-nix/key.txt";
       generateKey = true;
     };
 
