@@ -124,6 +124,7 @@ in {
     git
     sops
     age
+    github-desktop
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
