@@ -31,7 +31,6 @@
 	  ./modules/xremap.nix
 	  ./modules/sops.nix 
 
-          # FIXME: something broke "programs.neovim.defaultEditor = true;" after I added sops.nix for git
           home-manager.nixosModules.home-manager {
 	    home-manager = {
               useUserPackages = true;
