@@ -5,6 +5,8 @@
     ./modules/neovim.nix
     ./modules/git.nix
     ./modules/bash.nix
+    ./modules/noctalia.nix
+    ./modules/niri.nix
   ];
 
   home.username = "skill_sage";

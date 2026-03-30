@@ -57,8 +57,12 @@ in {
   services.xserver.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
+  # services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
+
+  # Install niri
+  services.displayManager.defaultSession = "niri";
+  programs.xwayland.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -89,6 +93,33 @@ in {
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  hardware.bluetooth.enable = true;
+  services.power-profiles-daemon.enable = true;
+  services.upower.enable = true;
+
+  fonts = {
+    fontconfig = {
+      enable = true; 
+      defaultFonts = {
+        monospace = [ "JetBrainMono Nerd Font" ];
+      };
+
+    };
+
+    packages = with pkgs; [
+      font-awesome
+    
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
+      noto-fonts-color-emoji
+      noto-fonts
+
+      nerd-fonts.symbols-only
+      nerd-fonts.jetbrains-mono
+    ];   
+
+  };
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.skill_sage = {
     isNormalUser = true;
@@ -97,10 +128,6 @@ in {
     packages = with pkgs; [
       kdePackages.kate
       neovim
-      noto-fonts-cjk-sans
-      noto-fonts-cjk-serif
-      noto-fonts-color-emoji
-      noto-fonts
 #      (nerdfonts.override { fonts = [ "Noto" ]; })
     #  thunderbird
     ];
@@ -125,6 +152,16 @@ in {
     sops
     age
     github-desktop
+
+    # niri required packages
+    mako
+    gnome-keyring
+    xdg-desktop-portal-gtk
+    xdg-desktop-portal-gnome
+    fuzzel
+    kdePackages.polkit-kde-agent-1
+    xwayland-satellite
+    alacritty
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
