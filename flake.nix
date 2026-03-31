@@ -36,6 +36,10 @@
       lib = nixpkgs.lib;
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      pkgsUnfree = import nixpkgs {
+        inherit system;
+	config.allowUnfree = true;
+      };
     in {
     
     nixosConfigurations = {
@@ -62,5 +66,8 @@
       };
     };
 
+    devShells.${system} = {
+      flutter = import ./shells/flutter.nix { pkgs = pkgsUnfree; };
+    };
   };
 }
