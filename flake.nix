@@ -44,7 +44,7 @@
     
     nixosConfigurations = {
       nixos = lib.nixosSystem {
-        specialArgs = { inherit xremap-flake; inherit sops-nix; inherit sysc-greet; };
+        specialArgs = { inherit nixpkgs xremap-flake sops-nix sysc-greet; };
 	inherit system;
 	modules = [ 
 	  ./configuration.nix 

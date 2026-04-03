@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, nixpkgs, ... }:
 
 let 
   locale = "en_US.UTF-8"; 
@@ -163,7 +163,11 @@ in {
     xwayland-satellite
     alacritty
     nixfmt-rfc-style
+    nixd
   ];
+
+  # nixd, make sure it uses nixpkgs flake
+  nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
