@@ -1,9 +1,14 @@
 {
     # ─── Input ────────────────────────────────────────────────────────────────
 
+  prefer-no-csd = true;
+
     input = {
       keyboard = {
         # Empty xkb = niri reads from org.freedesktop.locale1 (localectl)
+	repeat-rate = 35;
+	repeat-delay = 200;
+
         xkb = {
           # layout  = "us,ru";
           # options = "grp:win_space_toggle,compose:ralt,ctrl:nocaps";
@@ -27,19 +32,19 @@
       # mouse and trackpoint: all defaults, nothing to set
 
       # warp-mouse-to-focus.enable = true;
-      # focus-follows-mouse = { enable = true; max-scroll-amount = "0%"; };
+      focus-follows-mouse = { enable = true; max-scroll-amount = "0%"; };
     };
 
     # ─── Outputs ──────────────────────────────────────────────────────────────
     # Find output names with: niri msg outputs
 
-    # outputs."eDP-1" = {
-    #   # enable = false;
-    #   mode = { width = 1920; height = 1080; refresh = 120.030; };
-    #   scale = 2.0;
-    #   transform.rotation = 0;
-    #   position = { x = 1280; y = 0; };
-    # };
+    outputs."eDP-1" = {
+      # enable = false;
+      mode = { width = 1366; height = 768; refresh = 60.044; };
+      scale = 1.0;
+      transform.rotation = 0;
+      position = { x = 0; y = 0; };
+    };
 
     # ─── Layout ───────────────────────────────────────────────────────────────
 
@@ -160,6 +165,10 @@
       "Mod+T" = {
         hotkey-overlay.title = "Open a Terminal: alacritty";
         action.spawn         = "alacritty";
+      };
+      "Mod+B" = {
+        hotkey-overlay.title = "Open a Browser: firefox";
+        action.spawn         = "firefox";
       };
       "Mod+D" = {
         hotkey-overlay.title = "Run an Application: fuzzel";
