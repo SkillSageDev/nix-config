@@ -162,7 +162,7 @@ in {
     kdePackages.polkit-kde-agent-1
     xwayland-satellite
     alacritty
-    nixfmt-rfc-style
+    nixfmt
     nixd
   ];
 
