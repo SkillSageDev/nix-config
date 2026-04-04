@@ -54,7 +54,7 @@
 
           home-manager.nixosModules.home-manager {
 	    home-manager = {
-	      extraSpecialArgs = { inherit noctalia; inherit niri; };
+	      extraSpecialArgs = { inherit noctalia niri; };
               useUserPackages = true;
               useGlobalPkgs = true;
               backupFileExtension = "backup";
