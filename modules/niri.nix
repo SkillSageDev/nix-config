@@ -1,10 +1,12 @@
-{ niri, osConfig, ... }:
+{ niri, ... }:
 
 {
-  imports = [ niri.homeModules.niri ];
+  imports = [
+    niri.homeModules.niri
+    ./niri-settings.nix
+  ];
 
   programs.niri = {
     enable = true;
-    settings = import ./niri-settings.nix;
   };
 }
