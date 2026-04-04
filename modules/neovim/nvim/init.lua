@@ -4,13 +4,13 @@ vim.lsp.enable("nixd")
 
 vim.lsp.config("nixd", {
   cmd = { "nixd" },
+  capabilities = require("blink.cmp").get_lsp_capabilites,
   settings = {
     nixd = {
       nixpkgs = {
         expr = "import <nixpkgs> {}",
         expr = "import (builtins.getFlake (toString ../../../../flake.nix)).nixpkgs {}",
       },
-      -- nixpkgs["expr"] = 
     },
     formatting = { 
       command = { "nixfmt" },
@@ -18,9 +18,14 @@ vim.lsp.config("nixd", {
 
     options = { 
       nixos = { 
-        expr = "import (builtins.getFlake (toString ../../../../flake.nix)).nixosConfigurations.options {}",
+        expr = "(builtins.getFlake (toString ../../../../flake.nix)).nixosConfigurations.nixos.options",
+      },
+      home_manager = { 
+        expr = '(builtins.getFlake (toString ../../../../flake.nix)).homeConfigurations.skill_sage.options',
       },
     },
   },
 
 })
+
+require("blink.cmp").setup({})

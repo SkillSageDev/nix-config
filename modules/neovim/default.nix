@@ -6,6 +6,7 @@
     defaultEditor = true;
     plugins = with pkgs.vimPlugins; [
       nvim-lspconfig
+      blink-cmp
     ];
   };
 
