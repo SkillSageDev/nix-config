@@ -98,6 +98,7 @@ pkgs.mkShell rec {
     google-chrome
     chromedriver
     pkg-config
+    libsysprof-capture
     mesa-demos # provides eglinfo — fixes "Unable to access driver information"
   ];
 
