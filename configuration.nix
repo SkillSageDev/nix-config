@@ -152,6 +152,7 @@ in {
     sops
     age
     github-desktop
+    eza
 
     # niri required packages
     mako
