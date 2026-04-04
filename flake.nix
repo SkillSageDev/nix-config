@@ -31,43 +31,62 @@
 
   };
 
-  outputs = { nixpkgs, home-manager, sops-nix, xremap-flake, sysc-greet, noctalia, niri, ... }: 
+  outputs =
+    {
+      nixpkgs,
+      home-manager,
+      sops-nix,
+      xremap-flake,
+      sysc-greet,
+      noctalia,
+      niri,
+      ...
+    }:
     let
       lib = nixpkgs.lib;
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
       pkgsUnfree = import nixpkgs {
         inherit system;
-	config.allowUnfree = true;
+        config.allowUnfree = true;
       };
-    in {
-    
-    nixosConfigurations = {
-      nixos = lib.nixosSystem {
-        specialArgs = { inherit nixpkgs xremap-flake sops-nix sysc-greet; };
-	inherit system;
-	modules = [ 
-	  ./configuration.nix 
-	  ./modules/xremap.nix
-	  ./modules/sops.nix 
-	  ./modules/sysc-greet.nix
+    in
+    {
 
-          home-manager.nixosModules.home-manager {
-	    home-manager = {
-	      extraSpecialArgs = { inherit noctalia niri; };
-              useUserPackages = true;
-              useGlobalPkgs = true;
-              backupFileExtension = "backup";
-	      users.skill_sage = import ./home.nix;
-	    };
-	  }
+      nixosConfigurations = {
+        nixos = lib.nixosSystem {
+          specialArgs = {
+            inherit
+              nixpkgs
+              xremap-flake
+              sops-nix
+              sysc-greet
+              ;
+          };
+          inherit system;
+          modules = [
+            ./configuration.nix
+            ./modules/xremap.nix
+            ./modules/sops.nix
+            ./modules/sysc-greet.nix
 
-	];
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                extraSpecialArgs = { inherit noctalia niri; };
+                useUserPackages = true;
+                useGlobalPkgs = true;
+                backupFileExtension = "backup";
+                users.skill_sage = import ./home.nix;
+              };
+            }
+
+          ];
+        };
+      };
+
+      devShells.${system} = {
+        flutter = import ./shells/flutter.nix { pkgs = pkgsUnfree; };
       };
     };
-
-    devShells.${system} = {
-      flutter = import ./shells/flutter.nix { pkgs = pkgsUnfree; };
-    };
-  };
 }

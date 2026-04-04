@@ -2,15 +2,19 @@
 
 {
 
-  imports = [ xremap-flake.nixosModules.default ]; 
+  imports = [ xremap-flake.nixosModules.default ];
 
   services.xremap = {
     enable = true;
     config = {
-      modmap = [{
-        name = "Global";
-        remap = { "CapsLock" = "Esc"; };
-      }];
+      modmap = [
+        {
+          name = "Global";
+          remap = {
+            "CapsLock" = "Esc";
+          };
+        }
+      ];
     };
   };
 

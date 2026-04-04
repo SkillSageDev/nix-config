@@ -14,8 +14,8 @@
     };
 
     secrets = {
-      git_username = {};
-      git_email = {};
+      git_username = { };
+      git_email = { };
     };
   };
 }

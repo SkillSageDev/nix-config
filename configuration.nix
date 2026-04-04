@@ -2,23 +2,33 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, nixpkgs, ... }:
+{
+  config,
+  pkgs,
+  nixpkgs,
+  ...
+}:
 
-let 
-  locale = "en_US.UTF-8"; 
-in {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
-  
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+let
+  locale = "en_US.UTF-8";
+in
+{
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
+
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.initrd.luks.devices."luks-9dac2855-d74a-4d0d-8d41-c0e4088d46b2".device = "/dev/disk/by-uuid/9dac2855-d74a-4d0d-8d41-c0e4088d46b2";
+  boot.initrd.luks.devices."luks-9dac2855-d74a-4d0d-8d41-c0e4088d46b2".device =
+    "/dev/disk/by-uuid/9dac2855-d74a-4d0d-8d41-c0e4088d46b2";
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -34,7 +44,7 @@ in {
 
   # Select internationalisation properties.
   i18n.defaultLocale = locale;
-  
+
   i18n.extraLocales = [
     "en_US.UTF-8/UTF-8"
     "ar_SA.UTF-8/UTF-8"
@@ -99,7 +109,7 @@ in {
 
   fonts = {
     fontconfig = {
-      enable = true; 
+      enable = true;
       defaultFonts = {
         monospace = [ "JetBrainMono Nerd Font" ];
       };
@@ -108,7 +118,7 @@ in {
 
     packages = with pkgs; [
       font-awesome
-    
+
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
       noto-fonts-color-emoji
@@ -116,7 +126,7 @@ in {
 
       nerd-fonts.symbols-only
       nerd-fonts.jetbrains-mono
-    ];   
+    ];
 
   };
 
@@ -124,12 +134,15 @@ in {
   users.users.skill_sage = {
     isNormalUser = true;
     description = "Skill Sage";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     packages = with pkgs; [
       kdePackages.kate
       neovim
-#      (nerdfonts.override { fonts = [ "Noto" ]; })
-    #  thunderbird
+      #      (nerdfonts.override { fonts = [ "Noto" ]; })
+      #  thunderbird
     ];
   };
 
@@ -142,8 +155,8 @@ in {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #  wget
     btop
     fd
     xremap
