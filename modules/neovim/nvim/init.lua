@@ -28,4 +28,11 @@ vim.lsp.config("nixd", {
 
 })
 
+vim.lsp.enable("dartls")
+
+vim.lsp.config("dartls", {
+  capabilities = require("blink.cmp").get_lsp_capabilites,
+})
+
 require("blink.cmp").setup({})
+require("flutter-tools").setup({})

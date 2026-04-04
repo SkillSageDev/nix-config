@@ -7,6 +7,7 @@
     plugins = with pkgs.vimPlugins; [
       nvim-lspconfig
       blink-cmp
+      flutter-tools-nvim
     ];
   };
 
