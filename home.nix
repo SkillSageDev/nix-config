@@ -3,6 +3,7 @@
 {
   imports = [
     ./modules/neovim
+    ./modules/direnv
     ./modules/git.nix
     ./modules/bash.nix
     ./modules/noctalia.nix
