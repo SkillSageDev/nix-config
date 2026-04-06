@@ -18,9 +18,9 @@ vim.lsp.config("nixd", {
           expr = '(builtins.getFlake (toString ../../../../flake.nix)).nixosConfigurations.nixos.options',
         },
 
-        home_manager = { 
-          expr = '(builtins.getFlake /home/skill_sage/nix-config/flake.nix).nixosConfigurations.nixos.options.home-manager.users.type.getSubOptions []',
-        },
+        -- home_manager = { 
+        --   expr = '(builtins.getFlake /home/skill_sage/nix-config/flake.nix).nixosConfigurations.nixos.options.home-manager.users.type.getSubOptions []',
+        -- },
       },
     },
   },
