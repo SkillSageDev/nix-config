@@ -10,9 +10,8 @@
       flutter-tools-nvim
       plenary-nvim
       snacks-nvim
+      nvim-treesitter.withAllGrammars
     ];
-
-    # initLua = builtins.readFile ./nvim/init.lua;
   };
 
   home.packages = with pkgs; [
@@ -23,14 +22,10 @@
     mermaid-cli
     imagemagick
     sqlite
+    gcc
   ];
 
   home.file.".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "/home/skill_sage/nix-config/modules/neovim/nvim";
 
   xdg.configFile."nvim/init.lua".enable = false;
-
-  # xdg.configFile."nvim".source =
-  #   config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-config/modules/neovim/nvim/lua";
-
-  # xdg.configFile."nvim".source = ./nvim;
 }

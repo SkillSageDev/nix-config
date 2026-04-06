@@ -77,3 +77,10 @@ require("flutter-tools").setup({
     capabilities = require('blink.cmp').get_lsp_capabilities(),
   },
 })
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { '<filetype>' },
+  callback = function() vim.treesitter.start() end,
+})
+
+vim.opt.termguicolors = true
