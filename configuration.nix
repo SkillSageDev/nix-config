@@ -167,6 +167,7 @@ in
     github-desktop
     eza
     obsidian
+    godot
 
     # niri required packages
     mako
