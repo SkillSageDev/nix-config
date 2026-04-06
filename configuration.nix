@@ -166,6 +166,7 @@ in
     age
     github-desktop
     eza
+    obsidian
 
     # niri required packages
     mako
