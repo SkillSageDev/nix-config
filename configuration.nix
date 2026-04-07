@@ -25,6 +25,7 @@ in
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.consoleMode = "max";
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.initrd.luks.devices."luks-9dac2855-d74a-4d0d-8d41-c0e4088d46b2".device =
