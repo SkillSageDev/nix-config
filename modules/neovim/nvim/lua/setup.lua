@@ -4,55 +4,25 @@ vim.g.mapleader = " "
 vim.lsp.enable("nixd")
 vim.lsp.config("nixd", {
   cmd = { "nixd" },
+  filetypes = { "nix" },
+  root_markers = { "flake.nix", ".git", },
   capabilities = require("blink.cmp").get_lsp_capabilities(),
   settings = {
-    nixd = { -- Everything must be inside this block
+    nixd = {
       nixpkgs = {
-        expr = 'import (builtins.getFlake (toString ../../../../flake.nix)).inputs.nixpkgs { }',
+        expr = "import (builtins.getFlake (builtins.toString ./.)).nixpkgs {}",
       },
-      formatting = { 
+      formatting = {
         command = { "nixfmt" },
       },
-      options = { 
-        nixos = {
-          expr = '(builtins.getFlake (toString ../../../../flake.nix)).nixosConfigurations.nixos.options',
-        },
-
-        -- home_manager = { 
-        --   expr = '(builtins.getFlake /home/skill_sage/nix-config/flake.nix).nixosConfigurations.nixos.options.home-manager.users.type.getSubOptions []',
-        -- },
+      options = {
+	home_manager = {
+	  expr = "(builtins.getFlake (builtins.toString ./.)).nixosConfigurations.nixos.options.home-manager.users.type.getSubOptions []",
+	},
       },
     },
   },
 })
-
--- vim.lsp.config("nixd", {
---   cmd = { "nixd" },
---   capabilities = require("blink.cmp").get_lsp_capabilities(),
---   settings = {
---     nixd = {
---       nixpkgs = {
---         expr = "import (builtins.getFlake (toString ../../../../flake.nix)).nixpkgs {}",
---       },
---     },
---
---     formatting = { 
---       command = { "nixfmt" },
---     },
---
---     options = { 
---       nixos = {
---         expr = "(builtins.getFlake (toString ../../../../flake.nix)).nixosConfigurations.nixos.options",
---       },
---
---       home_manager = { 
---         expr = "(builtins.getFlake (toString ../../../../flake.nix)).nixosConfigurations.nixos.options.home-manager.users.type.getSubOptions []",
---       },
---
---     },
---   },
---
--- })
 
 require("snacks").setup({
   notifier = { enabled = true, },
@@ -77,12 +47,5 @@ require("flutter-tools").setup({
     capabilities = require('blink.cmp').get_lsp_capabilities(),
   },
 })
-
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = { '<filetype>' },
-  callback = function() vim.treesitter.start() end,
-})
-
-vim.opt.termguicolors = true
 
 vim.cmd.colorscheme "catppuccin"
