@@ -84,3 +84,5 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 vim.opt.termguicolors = true
+
+vim.cmd.colorscheme "catppuccin"

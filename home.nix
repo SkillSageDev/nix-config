@@ -8,6 +8,7 @@
     ./modules/bash.nix
     ./modules/noctalia.nix
     ./modules/niri.nix
+    ./modules/catppuccin.nix
   ];
 
   home.username = "skill_sage";

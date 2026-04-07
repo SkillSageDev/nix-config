@@ -29,6 +29,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    catppuccin.url = "github:catppuccin/nix";
+
   };
 
   outputs =
@@ -40,6 +42,7 @@
       sysc-greet,
       noctalia,
       niri,
+      catppuccin,
       ...
     }:
     let
@@ -73,7 +76,7 @@
             home-manager.nixosModules.home-manager
             {
               home-manager = {
-                extraSpecialArgs = { inherit noctalia niri; };
+                extraSpecialArgs = { inherit noctalia niri catppuccin; };
                 useUserPackages = true;
                 useGlobalPkgs = true;
                 backupFileExtension = "backup";
