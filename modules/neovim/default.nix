@@ -23,6 +23,9 @@
     imagemagick
     sqlite
     gcc
+    tree-sitter
+
+    lua-language-server
   ];
 
   home.file.".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "/home/skill_sage/nix-config/modules/neovim/nvim";
