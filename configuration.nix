@@ -169,6 +169,8 @@ in
     eza
     obsidian
     godot
+    libreoffice-qt-fresh
+    hunspell
 
     # niri required packages
     mako
