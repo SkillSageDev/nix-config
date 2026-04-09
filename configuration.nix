@@ -18,6 +18,10 @@ in
     ./hardware-configuration.nix
   ];
 
+  nix.package = pkgs.nixVersions.nix_2_34;
+
+  xdg.portal.enable = true;
+
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
@@ -171,6 +175,9 @@ in
     godot
     libreoffice-qt-fresh
     hunspell
+    qimgv
+    zathura
+    imv
 
     # niri required packages
     mako
