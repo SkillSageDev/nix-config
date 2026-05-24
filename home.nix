@@ -9,6 +9,8 @@
     ./modules/noctalia.nix
     ./modules/niri.nix
     ./modules/catppuccin.nix
+    ./modules/zoxide.nix
+    ./modules/tmux.nix
   ];
 
   home.username = "skill_sage";

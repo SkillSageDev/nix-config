@@ -1,8 +1,7 @@
 {
   inputs = {
-    # nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable-small";
-
-    nixpkgs.url = "github:nixos/nixpkgs/123da37985273eed01b34db436538c45e05c5cbd";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    # nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -31,13 +30,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    catppuccin.url = "github:catppuccin/nix";
+    devenv.url = "github:cachix/devenv";
 
+    catppuccin.url = "github:catppuccin/nix";
   };
 
   outputs =
     {
       nixpkgs,
+      # nixpkgs-stable,
       home-manager,
       sops-nix,
       xremap-flake,
@@ -45,6 +46,7 @@
       noctalia,
       niri,
       catppuccin,
+      devenv,
       ...
     }:
     let
@@ -66,6 +68,7 @@
               xremap-flake
               sops-nix
               sysc-greet
+              devenv
               ;
           };
           inherit system;
@@ -74,6 +77,7 @@
             ./modules/xremap.nix
             ./modules/sops.nix
             ./modules/sysc-greet.nix
+            ./modules/memory.nix
 
             home-manager.nixosModules.home-manager
             {
@@ -92,6 +96,7 @@
 
       devShells.${system} = {
         flutter = import ./shells/flutter.nix { pkgs = pkgsUnfree; };
+        python = import ./shells/python.nix { pkgs = pkgs; };
       };
     };
 }

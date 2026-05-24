@@ -42,7 +42,7 @@
     # ─── Outputs ──────────────────────────────────────────────────────────────
     # Find output names with: niri msg outputs
 
-    outputs."eDP-1" = {
+    outputs."LVDS-1" = {
       # enable = false;
       mode = {
         width = 1366;

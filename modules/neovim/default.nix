@@ -11,6 +11,7 @@
       plenary-nvim
       snacks-nvim
       nvim-treesitter.withAllGrammars
+      markdown-preview-nvim
     ];
   };
 
@@ -28,7 +29,8 @@
     lua-language-server
   ];
 
-  home.file.".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "/home/skill_sage/nix-config/modules/neovim/nvim";
+  home.file.".config/nvim".source =
+    config.lib.file.mkOutOfStoreSymlink "/home/skill_sage/nix-config/modules/neovim/nvim";
 
-  xdg.configFile."nvim/init.lua".enable = false;
+  # xdg.configFile."nvim/init.lua".enable = false;
 }

@@ -6,6 +6,7 @@
   config,
   pkgs,
   nixpkgs,
+  devenv,
   ...
 }:
 
@@ -17,10 +18,137 @@ in
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
+  boot.kernel.sysctl = {
+    "net.ipv4.ip_forward" = 1;
+  };
 
-  nix.package = pkgs.nixVersions.nix_2_34;
+  # services.gnome.gnome-keyring.enable = true;
 
-  xdg.portal.enable = true;
+  networking.nat = {
+    enable = true;
+    internalInterfaces = [ "virbr0" ];
+    externalInterface = "wlp8s0"; # Your Wi-Fi card
+    forwardPorts = [
+      {
+        sourcePort = 8080;
+        destination = "192.168.122.32:80";
+        proto = "tcp";
+      }
+    ];
+  };
+
+  networking.firewall = {
+    enable = true;
+    allowPing = true;
+    allowedTCPPorts = [ 8080 ]; # Opens the "front door" on your PC
+    trustedInterfaces = [ "virbr0" ];
+    checkReversePath = false; # Fixes the "no response" packet drop
+  };
+
+  virtualisation = {
+    containers.enable = true;
+    podman = {
+      enable = true;
+      dockerCompat = true;
+      defaultNetwork.settings.dns_enabled = true; # Required for containers under podman-compose to be able to talk to each other.
+    };
+  };
+
+  programs.localsend.enable = true;
+
+  services.samba = {
+    enable = true;
+    securityType = "user";
+    openFirewall = true;
+    settings = {
+      global = {
+        "workgroup" = "WORKGROUP";
+        "server string" = "smbnix";
+        "netbios name" = "smbnix";
+        "security" = "user";
+        #"use sendfile" = "yes";
+        #"max protocol" = "smb2";
+        # note: localhost is the ipv6 localhost ::1
+        "hosts allow" = "192.168.1. 127.0.0.1 localhost";
+        "hosts deny" = "0.0.0.0/0";
+        "guest account" = "nobody";
+        "map to guest" = "bad user";
+      };
+      "public" = {
+        "path" = "/home/skill_sage/Desktop/PSU/";
+        "browseable" = "yes";
+        "read only" = "no";
+        "guest ok" = "yes";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        # "force user" = "username";
+        # "force group" = "groupname";
+      };
+      "private" = {
+        "path" = "/home";
+        "browseable" = "yes";
+        "read only" = "no";
+        "guest ok" = "no";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force user" = "skill_sage";
+        # "force group" = "groupname";
+      };
+    };
+  };
+
+  services.samba-wsdd = {
+    enable = true;
+    openFirewall = true;
+  };
+
+  programs.dconf.enable = true;
+
+  virtualisation = {
+    libvirtd = {
+      enable = true;
+      qemu = {
+        swtpm.enable = true;
+      };
+    };
+    spiceUSBRedirection.enable = true;
+  };
+
+  services.spice-vdagentd.enable = true;
+  programs.virt-manager.enable = true;
+
+  # nix.package = pkgs.nixVersions.nix_2_34;
+
+  security.polkit.enable = true;
+  services.udisks2.enable = true;
+
+  systemd.user.services.polkit-gnome-authentication-agent-1 = {
+    description = "polkit-gnome-authentication-agent-1";
+    wantedBy = [ "graphical-session.target" ];
+    wants = [ "graphical-session.target" ];
+    after = [ "graphical-session.target" ];
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+      Restart = "on-failure";
+      RestartSec = 1;
+      TimeoutStopSec = 10;
+    };
+  };
+
+  security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+      if (action.id.startsWith("org.freedesktop.udisks2.") &&
+          subject.isInGroup("users")) {
+        return polkit.Result.YES;
+      }
+    });
+  '';
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [ kdePackages.xdg-desktop-portal-kde ];
+  };
 
   nix.settings.experimental-features = [
     "nix-command"
@@ -98,15 +226,15 @@ in
     alsa.support32Bit = true;
     pulse.enable = true;
     # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
+    jack.enable = true;
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
-    #media-session.enable = true;
+    wireplumber.enable = true;
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+  services.xserver.libinput.enable = true;
 
   hardware.bluetooth.enable = true;
   services.power-profiles-daemon.enable = true;
@@ -142,6 +270,9 @@ in
     extraGroups = [
       "networkmanager"
       "wheel"
+      "libvirtd"
+      "samba"
+      "podman"
     ];
     packages = with pkgs; [
       kdePackages.kate
@@ -156,6 +287,15 @@ in
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+
+  nix.settings = {
+    trusted-public-keys = [
+      "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+    ];
+    substituters = [
+      "https://devenv.cachix.org"
+    ];
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -178,6 +318,20 @@ in
     qimgv
     zathura
     imv
+    gparted-full
+    gnome-disk-utility
+    polkit_gnome
+    obs-studio
+    mpv
+    handbrake
+    dive
+    podman-tui
+    podman-compose
+    unrar
+    bat
+    anki
+    unzip
+    devenv.packages.${pkgs.system}.default
 
     # niri required packages
     mako
@@ -207,6 +361,7 @@ in
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  programs.ssh.startAgent = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
